@@ -7,6 +7,8 @@ import com.n26.stats.service.TransactionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static com.n26.stats.rest.mappers.TransactionMapper.*;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -22,7 +24,7 @@ public class TransactionRestController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public TransactionDTO createTransaction(@RequestBody TransactionDTO transactionDTO) {
+    public TransactionDTO createTransaction(@Valid @RequestBody TransactionDTO transactionDTO) {
         Transaction transaction =
                 transactionService.createTransaction(makeTransaction(transactionDTO));
         return makeTransactionDTO(transaction);
