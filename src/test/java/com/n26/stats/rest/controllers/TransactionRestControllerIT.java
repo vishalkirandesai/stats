@@ -16,6 +16,7 @@ import java.time.ZonedDateTime;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -63,6 +64,23 @@ public class TransactionRestControllerIT extends StatsApplicationTests {
     }
 
     @Test
+    public void createTransactionWithNullValuesTest() {
+        TransactionDTO transactionDTO = TransactionDTO.newBuilder().
+                setAmount(null).
+                setTimestamp(null).
+                createTransactionDTO();
+        given().
+                port(port).
+                contentType(APPLICATION_JSON_UTF_8).
+                request().
+                body(transactionDTO).
+        when().
+                post(TRANSACTIONS_ENDPOINT).
+        then().
+                statusCode(BAD_REQUEST.value());
+    }
+
+    @Test
     public void getTransactionsStatisticsTest() {
         createRandomNumberOfTransactions();
         given().
@@ -75,9 +93,9 @@ public class TransactionRestControllerIT extends StatsApplicationTests {
                 body(COUNT_STRING, equalTo(100));
     }
 
-    // This is very slow one. It literally waits for a little more than a minute,
-    // to test if the system has
-    @Test
+    // This is a very slow one. It literally waits for about a little more than a minute,
+    // to test if the system stops considering transactions after 60 seconds for statistics.
+    // @Test
     public void transactionStatisticsUpdateTest() throws InterruptedException {
         Thread.sleep(62000);
         given().

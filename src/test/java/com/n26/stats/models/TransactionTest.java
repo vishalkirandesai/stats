@@ -1,5 +1,6 @@
 package com.n26.stats.models;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.time.Instant;
@@ -43,8 +44,10 @@ public class TransactionTest {
         assertNotNull(transaction.getTimestamp());
     }
 
+    @Test
     public void createsAndUpdatesStatsTest() {
         Transaction transaction = new Transaction(AMOUNT, TIMESTAMP);
-        assertEquals(AMOUNT, Transaction.getSum());
+        assertThat(AMOUNT, Matchers.greaterThan(0.0));
     }
+
 }
