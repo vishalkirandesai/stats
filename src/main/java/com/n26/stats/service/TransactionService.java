@@ -1,15 +1,15 @@
 package com.n26.stats.service;
 
 import com.n26.stats.models.Transaction;
-import com.n26.stats.rest.dtos.TransactionsStatistics;
-
-import java.util.List;
+import com.n26.stats.rest.dtos.StatisticsDTO;
 
 public interface TransactionService {
 
-    TransactionsStatistics calculateTransactionsStatistics();
+    StatisticsDTO calculateTransactionsStatistics();
 
     Transaction createTransaction(Transaction transaction);
 
     void deleteTransaction(Long id);
+
+    StatisticsDTO getStatistics();
 }

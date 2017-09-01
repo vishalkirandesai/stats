@@ -34,7 +34,7 @@ public class TransactionMapper {
 
     private static ZonedDateTime getZonedDateTime(Long date) {
         Instant instant = Instant.ofEpochMilli(date);
-        return ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
+        return ZonedDateTime.ofInstant(instant, ZoneId.of("UTC"));
     }
 
     private static Long getEpochFromZonedDateTime(ZonedDateTime zonedDateTime) {
